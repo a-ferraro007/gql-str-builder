@@ -148,4 +148,4 @@ const secondInput: GraphqlQueryConstruct = {
 };
 
 const { gqlQueryMap } = new GraphQLQueryConstructMap([input, secondInput]);
-console.log(gqlQueryMap.GetConsultationAvailabilities);
+console.log(gqlQueryMap.GetAvailabilities);
