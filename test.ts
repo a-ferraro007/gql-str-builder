@@ -1,23 +1,21 @@
 export const GET_APPOINTMENT_AVAILABILITY = `
-  query GetConsultationAvailabilities($request: ConsultationAvailabilitiesInput!) {
-    consultationAvailabilities(request: $request) {
+  query GetAvailabilities($request: AvailabilitiesInput!) {
+   availabilities(request: $request) {
       availableDate
       isAvailable
       appointmentStatus
       durationInMinutes
-      serviceProviders {
+      providers {
         advisorId
-        attorneyId
-        advisorName
+        id
+        adId
         firstName
         middleName
         lastName
-        firmId
-        advisorProfileUrl
-        storageAccountId
+        placeId
+        profileUrl
+        accountId
       }
     }
   }
 `;
-
-`consultationAvailabilities(request: $request){consultationAvailabilities(request: $request){availableDate isAvailable appointmentStatus durationInMinutes serviceProviders {advisorId attorneyId advisorName middleName lastName firmId advisorProfileUrl storageAccountId }`;
