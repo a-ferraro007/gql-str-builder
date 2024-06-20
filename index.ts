@@ -41,21 +41,20 @@ class GraphQLQueryConstructMap {
                 TOKENS.CLOSED_PAREN +
                 TOKENS.OPEN_BRACKET;
 
-            templateStr += this.#buildQueryFields(queryFields, str);
+            templateStr += this.#buildQueryFields(queryFields.values(), str);
         }
         return templateStr;
     };
 
     #buildQueryFields = (
-        fields: GraphQLQueryFields | [string, Set<string>] | undefined,
+        fields: IterableIterator<string | [string, Set<string>]> | [string, Set<string>] | undefined, //GraphQLQueryFields
         templateStr: string
     ): string => {
         if (!fields) {
             return templateStr + TOKENS.CLOSED_BRACKET;
         }
 
-        const iterator = fields.values();
-        for (const field of iterator) {
+        for (const field of fields) {
             if (typeof field === "string") {
                 templateStr += field + TOKENS.WHITE_SPACE;
             } else if (field instanceof Array) {
