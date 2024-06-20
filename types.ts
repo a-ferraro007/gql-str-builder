@@ -1,6 +1,6 @@
 export type GraphqlQueryConstruct = {
     type: "query" | "mutation";
-    requestName: string; //'GetConsultationAvailabilities',
+    requestName: string; //'GetAvailabilities',
     requestParameters: RequestParameters;
     queries: Array<GraphQLQuery>;
 };
