@@ -99,14 +99,14 @@ class GraphQLQueryConstructMap {
 
 const input: GraphqlQueryConstruct = {
     type: "query",
-    requestName: "GetConsultationAvailabilities",
+    requestName: "GetAvailabilities",
     requestParameters: {
         arg: "request",
-        argType: "ConsultationAvailabilitiesInput",
+        argType: "AvailabilitiesInput",
     },
     queries: [
         {
-            queryName: "consultationAvailabilities",
+            queryName: "availabilities",
             queryParameters: "request",
             queryFields: new Set([
                 "availableDate",
@@ -114,16 +114,16 @@ const input: GraphqlQueryConstruct = {
                 "appointmentStatus",
                 "durationInMinutes",
                 [
-                    "serviceProviders",
+                    "providers",
                     new Set([
-                        "advisorId",
-                        "attorneyId",
-                        "advisorName",
+                        "id",
+                        "adId",
+                        "firstName",
                         "middleName",
                         "lastName",
-                        "firmId",
-                        "advisorProfileUrl",
-                        "storageAccountId",
+                        "placeId",
+                        "profileUrl",
+                        "accountId",
                     ]),
                 ],
             ]),
@@ -133,16 +133,16 @@ const input: GraphqlQueryConstruct = {
 
 const secondInput: GraphqlQueryConstruct = {
     type: "query",
-    requestName: "PostConsultationAvailabilities",
+    requestName: "PostAvailabilities",
     requestParameters: {
         arg: "request",
-        argType: "ConsultationAvailabilitiesInput",
+        argType: "AvailabilitiesInput",
     },
     queries: [
         {
-            queryName: "consultationNoAvailabilities",
+            queryName: "noAvailabilities",
             queryParameters: "request",
-            queryFields: new Set(["availableDate", ["advisors", new Set(["advisorId", "storageAccountId"])]]),
+            queryFields: new Set(["availableDate", ["advisors", new Set(["adId", "accountId"])]]),
         },
     ],
 };
