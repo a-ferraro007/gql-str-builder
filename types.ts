@@ -27,5 +27,5 @@ export enum TOKENS {
     WHITE_SPACE = " ",
     NEW_LINE = "\n",
 }
-// Set<string>
+
 export type GraphQLQueryFields = Set<string | [string, GraphQLQueryFields]>;
