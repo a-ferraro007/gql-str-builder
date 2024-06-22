@@ -2,6 +2,12 @@
 
 A utility to construct GraphQL query template strings from predefined structures
 
+## Setup
+```
+bun install
+bun index.ts
+```
+
 ## Usage
 
 ### Create the Query Builder Instance
