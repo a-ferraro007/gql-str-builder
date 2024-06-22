@@ -45,7 +45,8 @@ query GetAvailabilities($request: AvailabilitiesInput!) {
   }`;
 
 `
-  availabilities(request: $request){
+query GetAvailabilities($request: AvailabilitiesInput!) {
+  availabilities(request: $request) {
     availableDate
     isAvailable
     appointmentStatus
@@ -64,4 +65,7 @@ query GetAvailabilities($request: AvailabilitiesInput!) {
           inner-inner-two
           inner-inner-three
         }
-      }`;
+      }
+    }
+  }
+}`;

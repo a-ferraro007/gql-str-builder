@@ -23,10 +23,7 @@ class GraphQLQueryConstructMap {
         const { type, requestName, requestParameters, queries } = gqlQueryConstruct;
         const request = this.#buildRequest({ type, requestName, requestParameters }, ``);
         const requestQueries = this.#buildRequestQueries(queries, ``);
-
-        console.log(requestQueries);
-
-        return request + TOKENS.WHITE_SPACE + requestQueries + TOKENS.CLOSED_BRACKET;
+        return `${request}${TOKENS.WHITE_SPACE}${requestQueries}${TOKENS.CLOSED_BRACKET}`;
     };
 
     #buildRequestQueries = (queries: GraphQLQuery[], templateStr: string) => {
@@ -42,17 +39,17 @@ class GraphQLQueryConstructMap {
                 TOKENS.CLOSED_PAREN +
                 TOKENS.OPEN_BRACKET;
 
-            templateStr += this.#buildQueryFields(Array.from(queryFields.values()), str);
+            return `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
+                TOKENS.CLOSED_BRACKET
+            }`;
         }
-
-        return templateStr + TOKENS.CLOSED_BRACKET;
     };
 
     #buildQueryFields = (
         fields: Array<string> | Array<string | [string, GraphQLQueryFields]>,
         templateStr: string
     ): any => {
-        if (fields.length === 0) return templateStr + TOKENS.CLOSED_BRACKET;
+        if (fields.length === 0) return templateStr;
         const field = fields.shift() as string | Array<any>;
         if (typeof field === "string") {
             templateStr += field + TOKENS.WHITE_SPACE;
@@ -61,10 +58,8 @@ class GraphQLQueryConstructMap {
             const nestedQuery = field.shift() + TOKENS.WHITE_SPACE + TOKENS.OPEN_BRACKET;
             const nestedQueryFields = Array.from(field[0].values()) as Array<any>;
             templateStr += nestedQuery + TOKENS.WHITE_SPACE;
-            return this.#buildQueryFields(nestedQueryFields, templateStr);
+            return `${this.#buildQueryFields(nestedQueryFields, templateStr)}${TOKENS.CLOSED_BRACKET}`;
         }
-
-        return this.#buildQueryFields(fields, templateStr + TOKENS.CLOSED_BRACKET);
     };
 
     #buildRequest = (
@@ -158,4 +153,4 @@ const secondInput: GraphqlQueryConstruct = {
 };
 
 const { gqlQueryMap } = new GraphQLQueryConstructMap([input]);
-// console.log(gqlQueryMap.GetAvailabilities);
+console.log(gqlQueryMap.GetAvailabilities);
