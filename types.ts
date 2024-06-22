@@ -26,5 +26,5 @@ export enum TOKENS {
     CLOSED_BRACKET = "}",
     WHITE_SPACE = " ",
 }
-
-export type GraphQLQueryFields = Set<string | [string, Set<string>]>;
+// Set<string>
+export type GraphQLQueryFields = Set<string | [string, GraphQLQueryFields]>;
