@@ -88,7 +88,7 @@ class GraphQLQueryMap {
             }
             this.#buildQueryFields(nestedQueryFields, templateStr);
         }
-        return this.#buildQueryFields(fields, templateStr);
+        return this.#buildQueryFields(fields, `${templateStr}${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`);
         // return this.#buildQueryFields(fields, templateStr);
         // }
         // console.log({ fields });
