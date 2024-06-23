@@ -40,33 +40,63 @@ class GraphQLQueryMap {
                 TOKENS.OPEN_BRACKET +
                 TOKENS.NEW_LINE;
 
-            return `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
+            const t = `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
                 TOKENS.CLOSED_BRACKET
             }${TOKENS.NEW_LINE}`;
+            console.log(t);
+
+            // return `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
+            //     TOKENS.CLOSED_BRACKET
+            // }${TOKENS.NEW_LINE}`;
         }
     };
 
+    // while (fields.length !== 0) {
+    // console.log(fields?.length);
     #buildQueryFields = (
         fields: Array<string> | Array<string | [string, GraphQLQueryFields]>,
         templateStr: string
     ): any => {
-        if (fields.length === 0) return templateStr;
-        const field = fields.shift() as string | Array<any>;
-        if (typeof field === "string") {
-            return this.#buildQueryFields(
-                fields,
-                `${templateStr}${field}${TOKENS.WHITE_SPACE}${TOKENS.NEW_LINE}`
-            );
-        } else if (field instanceof Array) {
-            const nestedQuery = `${field.shift()}${TOKENS.WHITE_SPACE}${TOKENS.OPEN_BRACKET}${
-                TOKENS.NEW_LINE
-            }`;
-            const nestedQueryFields = Array.from(field[0].values()) as Array<any>;
-            return `${this.#buildQueryFields(
-                nestedQueryFields,
-                `${templateStr}${nestedQuery}${TOKENS.WHITE_SPACE}`
-            )}${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`;
+        if (fields.length === 0) {
+            templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`;
+            return templateStr;
         }
+
+        const field = fields.shift() as string | Array<any>;
+
+        if (typeof field === "string") {
+            templateStr += `${field}${TOKENS.WHITE_SPACE}${TOKENS.NEW_LINE}`;
+        } else if (field instanceof Array) {
+            if (!(field instanceof Set)) {
+                templateStr += `${field.shift()}${TOKENS.WHITE_SPACE}${TOKENS.OPEN_BRACKET}${
+                    TOKENS.NEW_LINE
+                }`;
+            }
+
+            const nestedQueryFields = field[0] ? (Array.from(field[0].values()) as Array<any>) : [];
+
+            for (const nestedField of nestedQueryFields) {
+                if (nestedField instanceof Array) {
+                    templateStr += `${TOKENS.WHITE_SPACE}${nestedField[0]}${TOKENS.WHITE_SPACE}${TOKENS.OPEN_BRACKET}${TOKENS.NEW_LINE}`;
+                    const nestedQueryFieldsX = Array.from(nestedField[1].values()) as Array<any>;
+                    console.log(nestedQueryFieldsX);
+
+                    this.#buildQueryFields(nestedQueryFieldsX, templateStr);
+                } else {
+                    templateStr += `${TOKENS.WHITE_SPACE}${nestedField}${TOKENS.WHITE_SPACE}${TOKENS.NEW_LINE}`;
+                }
+            }
+            this.#buildQueryFields(nestedQueryFields, templateStr);
+        }
+        return this.#buildQueryFields(fields, templateStr);
+        // return this.#buildQueryFields(fields, templateStr);
+        // }
+        // console.log({ fields });
+        // return this.#buildQueryFields(fields, templateStr);
+        // return `${this.#buildQueryFields(fields, `${templateStr}`)}`;
+        // return `${this.#buildQueryFields(fields, `${templateStr}`)}${TOKENS.CLOSED_BRACKET}${
+        //     TOKENS.NEW_LINE
+        // }`;
     };
 
     #buildRequest = (
@@ -103,9 +133,8 @@ export class GqlQueryBuilder extends GraphQLQueryMap {
         super(gqlQueryConstructs);
     }
 
-    // TODO: pretty print query string 
+    // TODO: pretty print query string
     prettyPrint = () => {
-        console.log("not implemented yet")
-    }
-
+        console.log("not implemented yet");
+    };
 }
