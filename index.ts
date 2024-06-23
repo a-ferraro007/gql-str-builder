@@ -40,14 +40,9 @@ class GraphQLQueryMap {
                 TOKENS.OPEN_BRACKET +
                 TOKENS.NEW_LINE;
 
-            const t = `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
+            return `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
                 TOKENS.CLOSED_BRACKET
             }${TOKENS.NEW_LINE}`;
-            console.log(t);
-
-            // return `${templateStr}${this.#buildQueryFields(Array.from(queryFields.values()), str)}${
-            //     TOKENS.CLOSED_BRACKET
-            // }${TOKENS.NEW_LINE}`;
         }
     };
 
@@ -58,7 +53,6 @@ class GraphQLQueryMap {
         templateStr: string
     ): any => {
         if (fields.length === 0) {
-            // templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`;
             return templateStr;
         }
 
