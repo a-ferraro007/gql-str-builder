@@ -102,6 +102,12 @@ class GqlQueryBuilder extends GraphQLQueryMap {
     constructor(gqlQueryConstructs: GraphqlQueryConstruct[]) {
         super(gqlQueryConstructs);
     }
+
+    // TODO: pretty print query string 
+    prettyPrint = () => {
+        console.log("not implemented yet")
+    }
+
 }
 
 const input: GraphqlQueryConstruct = {
