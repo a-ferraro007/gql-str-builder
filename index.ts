@@ -58,7 +58,7 @@ class GraphQLQueryMap {
         templateStr: string
     ): any => {
         if (fields.length === 0) {
-            templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`;
+            // templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`;
             return templateStr;
         }
 
@@ -79,16 +79,21 @@ class GraphQLQueryMap {
                 if (nestedField instanceof Array) {
                     templateStr += `${TOKENS.WHITE_SPACE}${nestedField[0]}${TOKENS.WHITE_SPACE}${TOKENS.OPEN_BRACKET}${TOKENS.NEW_LINE}`;
                     const nestedQueryFieldsX = Array.from(nestedField[1].values()) as Array<any>;
-                    console.log(nestedQueryFieldsX);
 
-                    this.#buildQueryFields(nestedQueryFieldsX, templateStr);
+                    this.#buildQueryFields(
+                        nestedQueryFieldsX,
+                        (templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`)
+                    );
                 } else {
                     templateStr += `${TOKENS.WHITE_SPACE}${nestedField}${TOKENS.WHITE_SPACE}${TOKENS.NEW_LINE}`;
                 }
             }
-            this.#buildQueryFields(nestedQueryFields, templateStr);
+            this.#buildQueryFields(
+                nestedQueryFields,
+                (templateStr += `${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`)
+            );
         }
-        return this.#buildQueryFields(fields, `${templateStr}${TOKENS.CLOSED_BRACKET}${TOKENS.NEW_LINE}`);
+        return this.#buildQueryFields(fields, templateStr);
         // return this.#buildQueryFields(fields, templateStr);
         // }
         // console.log({ fields });
