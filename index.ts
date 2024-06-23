@@ -46,8 +46,6 @@ class GraphQLQueryMap {
         }
     };
 
-    // while (fields.length !== 0) {
-    // console.log(fields?.length);
     #buildQueryFields = (
         fields: Array<string> | Array<string | [string, GraphQLQueryFields]>,
         templateStr: string
@@ -88,14 +86,6 @@ class GraphQLQueryMap {
             );
         }
         return this.#buildQueryFields(fields, templateStr);
-        // return this.#buildQueryFields(fields, templateStr);
-        // }
-        // console.log({ fields });
-        // return this.#buildQueryFields(fields, templateStr);
-        // return `${this.#buildQueryFields(fields, `${templateStr}`)}`;
-        // return `${this.#buildQueryFields(fields, `${templateStr}`)}${TOKENS.CLOSED_BRACKET}${
-        //     TOKENS.NEW_LINE
-        // }`;
     };
 
     #buildRequest = (
