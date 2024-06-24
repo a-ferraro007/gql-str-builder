@@ -49,12 +49,12 @@ class GraphQLQueryMap {
     #buildQueryFields = (
         fields: Array<string> | Array<string | [string, GraphQLQueryFields]>,
         templateStr: string
-    ): any => {
+    ): string => {
         if (fields.length === 0) {
             return templateStr;
         }
 
-        const field = fields.shift() as string | Array<any>;
+        const field = fields.shift() as string | Array<Set<string>>;
         if (typeof field === "string") {
             templateStr += `${field}${TOKENS.WHITE_SPACE}${TOKENS.NEW_LINE}`;
         } else {
