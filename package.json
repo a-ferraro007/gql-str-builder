@@ -1,5 +1,6 @@
 {
-  "name": "gql-parser",
+  "name": "gql-str-builder",
+  "version": "0.0.1",
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
@@ -7,5 +8,10 @@
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/a-ferraro007/gql-str-builder"
+  },
+  "author": "Tony Ferraro"
 }

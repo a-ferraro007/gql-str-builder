@@ -1,32 +1,6 @@
-# GraphQL Query Builder
+import { GqlQueryBuilder, type GraphqlQueryConstruct } from ".";
 
-A utility to construct GraphQL query template strings from a JS object.
-
-## Setup
-```
-bun install
-bun example.ts
-```
-
-## Usage
-
-### Create the Query Builder Instance
-
-Create an instance of the `GqlQueryBuilder` with the defined query constructs:
-
-```javascript
-const { gqlQueryMap } = new GqlQueryBuilder([input]);
-gqlQueryMap.GetAvailabilities // Record<requestName, gqlTemplateStr>
-```
-
-
-### Example GQL Query Structure
-
-GraphQL query constructs are defined by specifying the query type, request name, request parameters, and the request queries & their fields.
-Query fields are defined with a Set of strings and can be nested with no max depth (as of now) using an [string, Set<string>].
-
-```javascript
-const input: GraphqlQueryConstruct = {
+const query: GraphqlQueryConstruct = {
     type: "query",
     requestName: "GetAvailabilities",
     requestParameters: {
@@ -71,36 +45,22 @@ const input: GraphqlQueryConstruct = {
         },
     ],
 };
-```
-### Example Output w/ prettier printing
 
-```graphql
-query GetAvailabilities($request: AvailabilitiesInput!) {
-  availabilities(request: $request) {
-    availableDate
-    isAvailable
-    appointmentStatus
-    durationInMinutes
-    providers {
-      id
-      adId
-      firstName
-      middleName
-      inner {
-        inner-one
-        inner-two
-        inner-three
-        inner-inner {
-          inner-inner-one
-          inner-inner-two
-          inner-inner-three
-        }
-      }
-      lastName
-      placeId
-      profileUrl
-      accountId
-    }
-  }
-}
-```
+const queryTwo: GraphqlQueryConstruct = {
+    type: "query",
+    requestName: "PostAvailabilities",
+    requestParameters: {
+        arg: "request",
+        argType: "AvailabilitiesInput",
+    },
+    queries: [
+        {
+            queryName: "noAvailabilities",
+            queryParameters: "request",
+            queryFields: new Set(["availableDate", ["advisors", new Set(["adId", "accountId"])]]),
+        },
+    ],
+};
+
+const { gqlQueryMap } = new GqlQueryBuilder([query, queryTwo]);
+console.log(gqlQueryMap);
